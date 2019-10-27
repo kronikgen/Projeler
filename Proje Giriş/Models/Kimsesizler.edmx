@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="evlatedindirmeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cocuk">
+          <Key>
+            <PropertyRef Name="CocukID" />
+          </Key>
+          <Property Name="CocukID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="DogumTarihi" Type="datetime" />
+          <Property Name="Yas" Type="int" />
+        </EntityType>
+        <EntityType Name="Ebeveyn">
+          <Key>
+            <PropertyRef Name="EbeveynID" />
+          </Key>
+          <Property Name="EbeveynID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gelir" Type="int" />
+        </EntityType>
+        <EntityType Name="Kayit">
+          <Key>
+            <PropertyRef Name="KayitID" />
+          </Key>
+          <Property Name="KayitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CocukID" Type="int" />
+          <Property Name="EbeveynID" Type="int" />
+          <Property Name="CocukAlmaDurumu" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Kayit_Cocuk">
+          <End Role="Cocuk" Type="Self.Cocuk" Multiplicity="0..1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cocuk">
+              <PropertyRef Name="CocukID" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="CocukID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kayit_Ebeveyn">
+          <End Role="Ebeveyn" Type="Self.Ebeveyn" Multiplicity="0..1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ebeveyn">
+              <PropertyRef Name="EbeveynID" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="EbeveynID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="evlatedindirmeModelStoreContainer">
+          <EntitySet Name="Cocuk" EntityType="Self.Cocuk" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ebeveyn" EntityType="Self.Ebeveyn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kayit" EntityType="Self.Kayit" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Kayit_Cocuk" Association="Self.FK_Kayit_Cocuk">
+            <End Role="Cocuk" EntitySet="Cocuk" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kayit_Ebeveyn" Association="Self.FK_Kayit_Ebeveyn">
+            <End Role="Ebeveyn" EntitySet="Ebeveyn" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="evlatedindirmeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cocuk">
+          <Key>
+            <PropertyRef Name="CocukID" />
+          </Key>
+          <Property Name="CocukID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DogumTarihi" Type="DateTime" Precision="3" />
+          <Property Name="Yas" Type="Int32" />
+          <NavigationProperty Name="Kayit" Relationship="Self.FK_Kayit_Cocuk" FromRole="Cocuk" ToRole="Kayit" />
+        </EntityType>
+        <EntityType Name="Ebeveyn">
+          <Key>
+            <PropertyRef Name="EbeveynID" />
+          </Key>
+          <Property Name="EbeveynID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gelir" Type="Int32" />
+          <NavigationProperty Name="Kayit" Relationship="Self.FK_Kayit_Ebeveyn" FromRole="Ebeveyn" ToRole="Kayit" />
+        </EntityType>
+        <EntityType Name="Kayit">
+          <Key>
+            <PropertyRef Name="KayitID" />
+          </Key>
+          <Property Name="KayitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CocukID" Type="Int32" />
+          <Property Name="EbeveynID" Type="Int32" />
+          <Property Name="CocukAlmaDurumu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Cocuk" Relationship="Self.FK_Kayit_Cocuk" FromRole="Kayit" ToRole="Cocuk" />
+          <NavigationProperty Name="Ebeveyn" Relationship="Self.FK_Kayit_Ebeveyn" FromRole="Kayit" ToRole="Ebeveyn" />
+        </EntityType>
+        <Association Name="FK_Kayit_Cocuk">
+          <End Role="Cocuk" Type="Self.Cocuk" Multiplicity="0..1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cocuk">
+              <PropertyRef Name="CocukID" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="CocukID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kayit_Ebeveyn">
+          <End Role="Ebeveyn" Type="Self.Ebeveyn" Multiplicity="0..1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ebeveyn">
+              <PropertyRef Name="EbeveynID" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="EbeveynID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="evlatedindirmeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cocuk" EntityType="Self.Cocuk" />
+          <EntitySet Name="Ebeveyn" EntityType="Self.Ebeveyn" />
+          <EntitySet Name="Kayit" EntityType="Self.Kayit" />
+          <AssociationSet Name="FK_Kayit_Cocuk" Association="Self.FK_Kayit_Cocuk">
+            <End Role="Cocuk" EntitySet="Cocuk" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kayit_Ebeveyn" Association="Self.FK_Kayit_Ebeveyn">
+            <End Role="Ebeveyn" EntitySet="Ebeveyn" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="evlatedindirmeModelStoreContainer" CdmEntityContainer="evlatedindirmeEntities">
+          <EntitySetMapping Name="Cocuk">
+            <EntityTypeMapping TypeName="evlatedindirmeModel.Cocuk">
+              <MappingFragment StoreEntitySet="Cocuk">
+                <ScalarProperty Name="CocukID" ColumnName="CocukID" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="DogumTarihi" ColumnName="DogumTarihi" />
+                <ScalarProperty Name="Yas" ColumnName="Yas" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ebeveyn">
+            <EntityTypeMapping TypeName="evlatedindirmeModel.Ebeveyn">
+              <MappingFragment StoreEntitySet="Ebeveyn">
+                <ScalarProperty Name="EbeveynID" ColumnName="EbeveynID" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Gelir" ColumnName="Gelir" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kayit">
+            <EntityTypeMapping TypeName="evlatedindirmeModel.Kayit">
+              <MappingFragment StoreEntitySet="Kayit">
+                <ScalarProperty Name="KayitID" ColumnName="KayitID" />
+                <ScalarProperty Name="CocukID" ColumnName="CocukID" />
+                <ScalarProperty Name="EbeveynID" ColumnName="EbeveynID" />
+                <ScalarProperty Name="CocukAlmaDurumu" ColumnName="CocukAlmaDurumu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
